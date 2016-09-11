@@ -5,6 +5,8 @@
     <button id="callMe">Call Me</button>
     <button id="listen">Listen</button>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="watson-speech.js"></script>
     <script>
@@ -82,6 +84,10 @@
         <input type="text" id="phone_input" name="phone_number" placeholder="Enter your phone number"><br>
       </form>
       <button onclick="setNumber()">Set the number button</button>
+    </div>
+    <div>
+      <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+      <span class="sr-only">Loading...</span>
     </div>
   </body>
 </html>
