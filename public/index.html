@@ -5,12 +5,29 @@
     <button id="callMe">Call Me</button>
     <button id="listen" class="search-bar">Listen</button>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="watson-speech.js"></script>
     <script>
     class App {
       isTriggerKeyword(data) {
         return data.includes('interesting') || data.includes('Interesting');
+      }
+
+      makeCall(phoneNumber) {
+        console.log('makeCall');
+        console.log(phoneNumber)
+        fetch('/call', {
+          method: 'POST',
+          body: JSON.stringify({
+            phoneNumber: "+1" + phoneNumber
+          }),
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          }
+        });
       }
 
       startListening() {
@@ -29,7 +46,7 @@
             if (that.isTriggerKeyword(data)) {
               console.log('Making a call..');
               stream.stop();
-              that.makeCall();
+              that.makeCall(localStorage.getItem("phoneNumber"));
             }
           });
 
@@ -37,20 +54,6 @@
               console.log(err);
           });
         })
-      }
-
-      makeCall(phoneNumber) {
-        console.log(phoneNumber)
-        fetch('/call', {
-          method: 'POST',
-          body: JSON.stringify({
-            phoneNumber: "+1" + phoneNumber
-          }),
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          }
-        });
       }
     }
 
@@ -82,6 +85,10 @@
         <input type="text" id="phone_input" name="phone_number" placeholder="Enter your phone number"><br>
       </form>
       <button onclick="setNumber()">Set the number button</button>
+    </div>
+    <div>
+      <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+      <span class="sr-only">Loading...</span>
     </div>
   </body>
 </html>
