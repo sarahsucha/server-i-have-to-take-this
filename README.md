@@ -7,10 +7,10 @@ Design a mobile-first app for those times when you're trapped in a bad conversat
 ![screenshots](/public/screenshots.jpg "screenshots")
 
 ## Team
-* [Armon Arcuri](https://github.com/armoney)
-* Daniel Suchy
-* [Sarah Sucha](https://github.com/sarahsucha)
-* [Shawn Tuttle](https://github.com/ShawnTe)
+* [Armon Arcuri](https://github.com/armoney) - armonsf@gmail.com
+* [Daniel Suchy](https://github.com/danielsoner)
+* [Sarah Sucha](https://github.com/sarahsucha) - sarahsucha@gmail.com 
+* [Shawn Tuttle](https://github.com/ShawnTe) - hello@shawntuttle.com
 
 ## Where We're At
 * >>> Make it work
