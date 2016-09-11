@@ -1,3 +1,46 @@
-/*.hidden {
-  display: none;
-}*/
+.phoney-logo {
+  margin: 20px auto 0 auto;
+  overflow: hidden;
+  background: transparent url("../phoney-logo.png") top center no-repeat;
+    background-size: 200px 47px;
+    width: 200px;
+    height: 47px;
+    display: block;
+}
+
+.main {
+  padding: 20px;
+  margin: 0 auto;
+  width: 300px;
+  color: #666;
+}
+
+.main h1 {
+  text-align: center;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 11px;
+}
+
+footer ul li {
+  list-style-type: none;
+}
+
+footer ul li a {
+  color: #666;
+  text-decoration: underline;
+}
+
+footer ul li a:hover {
+  text-decoration: none;
+}
+
+form {
+  padding-top: 30px;
+}
