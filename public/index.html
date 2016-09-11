@@ -1,13 +1,20 @@
 <html>
   <head></head>
   <body>
-    Hello
     <div id="output"></div>
+    <button id="callMe">Call Me</button>
+    <button id="listen">Listen</button>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="watson-speech.js"></script>
     <script>
-    class Speech {
+    class App {
+      isTriggerKeyword(data) {
+        const parsedData = data.split(" ");
+        return parsedData.indexOf('interesting') !== -1;
+      }
+
       startListening() {
+        var that = this;
         fetch('http://localhost:3000/watson-token').then(function(response) {
           return response.text();
         }).then((token) => {
@@ -19,7 +26,10 @@
           stream.setEncoding('utf8'); // get text instead of Buffers for on data events
 
           stream.on('data', function(data) {
-            console.log(data);
+            if (that.isTriggerKeyword(data)) {
+              stream.stop();
+              that.makeCall();
+            }
           });
 
           stream.on('error', function(err) {
@@ -27,11 +37,26 @@
           });
         })
       }
+
+      makeCall() {
+        fetch('http://localhost:3000/call', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          }
+        });
+      }
     }
 
     $(document).ready(function() {
-      const speech = new Speech();
-      speech.startListening();
+      const app = new App();
+      $('#listen').click(() => {
+        app.startListening();
+      });
+      $('#callMe').click(() => {
+        app.makeCall();
+      });
     });
     </script>
   </body>
