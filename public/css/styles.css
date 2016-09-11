@@ -15,6 +15,10 @@
   color: #666;
 }
 
+.bad-conversation {
+  width: 250px;
+}
+
 @media (max-width: 767px) {
   .main {
       margin-top: 30px;
@@ -22,7 +26,13 @@
       width: 100%;
       background-color: #fff;
   }
+  .bad-conversation {
+    width: 70%;
+  }
+
 }
+
+
 
 .main h1 {
   text-align: center;
