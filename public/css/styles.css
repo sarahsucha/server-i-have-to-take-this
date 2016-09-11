@@ -23,7 +23,7 @@
   color: #666;
 }
 
-.bad-conversation {
+.full-width-image {
   width: 100%;
 }
 
@@ -36,7 +36,9 @@
   }
 }
 
-
+.top15 {
+  margin-top: 15px;
+}
 
 .main h1 {
   text-align: center;

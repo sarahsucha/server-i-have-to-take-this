@@ -11,7 +11,6 @@
     </header>
     <div id="main" class="main">
       <div class="homepage">
-        <h1>How It Works</h1>
         <ol>
           <li>Trapped in a bad conversation!</li>
           <li>Saved by the call</li>
@@ -19,7 +18,7 @@
         </ol>
         <div class="row">
           <div class="col-xs-8 col-xs-offset-2">
-            <img src="bad-conversation-help.png" alt="Bad Conversation" class="bad-conversation" />
+            <img src="bad-conversation-help.png" alt="Bad Conversation" class="full-width-image" />
           </div>
         </div>
         <form class="phone-number-form">
@@ -31,12 +30,21 @@
               id="phone_input"
               class="form-control"
               name="phone_number"
-              placeholder="Enter your phone number (Format: 4151112222)"
+              placeholder="Format: 4151112222"
               required
             />
           </div>
           <button type="submit" id="submitPhoneNumber" class="btn btn-default">Save</button>
         </form>
+      </div>
+      <div class="instruction-page hidden">
+        <h1>How It Works</h1>
+        <div class="row">
+          <div class="col-xs-12">
+            <img src="instructions.png" alt="Instructions" class="full-width-image" />
+          </div>
+        </div>
+        <button id="understand-instructions" class="btn btn-default top15">Got It</button>
       </div>
       <div class="fake-call-page hidden">
         <button id="callMe">Call Me</button>
@@ -50,7 +58,7 @@
     <footer>
       <ul>
         <li>
-          <a href="mailto:someone@example.com?Subject=Hello%20again" target="_top">Hire Us!</a>
+          <a href="https://github.com/sarahsucha/server-i-have-to-take-this" target="_blank">Hire Us!</a>
         </li>
       </ul>
     </footer>
@@ -116,15 +124,23 @@
       var phoneNumber = localStorage.getItem("phoneNumber")
       if (phoneNumber) {
         $('#phone_input').val(phoneNumber);
-        // $('.fake-call-page').removeClass('hidden');
-        // $('.homepage').addClass('hidden');
+        $('.fake-call-page').removeClass('hidden');
+        $('header').addClass('hidden');
+        $('footer').addClass('hidden');
+        $('.homepage').addClass('hidden');
       }
 
       $('.phone-number-form').on('submit', (event) => {
         event.preventDefault();
         app.setNumber($('#phone_input').val());
-        $('.fake-call-page').removeClass('hidden');
         $('.homepage').addClass('hidden');
+        $('.instruction-page').removeClass('hidden');
+      });
+      $('#understand-instructions').click(() => {
+        $('.instruction-page').addClass('hidden');
+        $('header').addClass('hidden');
+        $('footer').addClass('hidden');
+        $('.fake-call-page').removeClass('hidden');
       });
       $('#listen').click(() => {
         app.startListening();
