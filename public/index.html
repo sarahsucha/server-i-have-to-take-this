@@ -46,12 +46,18 @@
         </div>
         <button id="understand-instructions" class="btn btn-default top15">Got It</button>
       </div>
-      <div class="fake-call-page hidden">
-        <button id="callMe">Call Me</button>
-        <button id="listen">Listen</button>
-        <div>
-          <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-          <span class="sr-only">Loading...</span>
+      <div class="chat-page hidden">
+        <div class="spinner-content row hidden">
+          <div class="col-xs-4 col-xs-offset-4">
+            <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+          </div>
+        </div>
+        <div class="chat top15">
+          <div class="bubble me" id="edit-number">Hey, has your number changed?</div>
+          <div class="bubble you">No, my phone was temporarily possessed by aliens.</div>
+          <div class="bubble me" id="listen">Listen, I don't have time for that kind of nonsense. If you didn't want to talk with me, you only had to say so.</div>
+          <div class="bubble you" id="callMe">Fine, fine. Call me and we'll figure out how to take this deal to the next level. I'm sure it's in everyone's best interest.</div>
+          <div class="bubble me">Only time will tell. Let's see whether the powers that be recognize a good thing when they see it.</div>
         </div>
       </div>
     </div>
@@ -121,10 +127,11 @@
     $(document).ready(function() {
       const app = new App();
 
+
       var phoneNumber = localStorage.getItem("phoneNumber")
       if (phoneNumber) {
         $('#phone_input').val(phoneNumber);
-        $('.fake-call-page').removeClass('hidden');
+        $('.chat-page').removeClass('hidden');
         $('header').addClass('hidden');
         $('footer').addClass('hidden');
         $('.homepage').addClass('hidden');
@@ -140,13 +147,27 @@
         $('.instruction-page').addClass('hidden');
         $('header').addClass('hidden');
         $('footer').addClass('hidden');
-        $('.fake-call-page').removeClass('hidden');
+        $('.chat-page').removeClass('hidden');
       });
+      function showSpinner() {
+        $('.spinner-content').removeClass('hidden');
+        setTimeout(() => {
+          $('.spinner-content').addClass('hidden');
+        }, 1000);
+      }
       $('#listen').click(() => {
+        showSpinner();
         app.startListening();
       });
       $('#callMe').click(() => {
+        showSpinner();
         app.makeCall(localStorage.getItem("phoneNumber"));
+      });
+      $('#edit-number').click(() => {
+        $('.chat-page').addClass('hidden');
+        $('header').removeClass('hidden');
+        $('footer').removeClass('hidden');
+        $('.homepage').removeClass('hidden');
       });
     });
     </script>
