@@ -4,6 +4,7 @@
     <div id="output"></div>
     <button id="callMe">Call Me</button>
     <button id="listen">Listen</button>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="watson-speech.js"></script>
     <script>
@@ -38,9 +39,13 @@
         })
       }
 
-      makeCall() {
+      makeCall(phoneNumber) {
+        console.log(phoneNumber)
         fetch('/call', {
           method: 'POST',
+          body: JSON.stringify({
+            phoneNumber: "+1" + phoneNumber
+          }),
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json'
@@ -50,14 +55,33 @@
     }
 
     $(document).ready(function() {
+      var phoneNumber = localStorage.getItem("phoneNumber")
+      if (!phoneNumber) {
+        // $('.phoneNumberSection').show();
+      }
+
       const app = new App();
       $('#listen').click(() => {
         app.startListening();
       });
       $('#callMe').click(() => {
-        app.makeCall();
+        app.makeCall(localStorage.getItem("phoneNumber"));
       });
     });
+
+    var phoneNumber = ""
+
+    var setNumber = function(){
+      phoneNumber = document.getElementById('phone_input').value
+      localStorage.setItem("phoneNumber", phoneNumber);
+      // $('.phoneNumberSection').hide();
+    }
     </script>
+    <div class="phoneNumberSection hidden">
+      <form>
+        <input type="text" id="phone_input" name="phone_number" placeholder="Enter your phone number"><br>
+      </form>
+      <button onclick="setNumber()">Set the number button</button>
+    </div>
   </body>
 </html>
