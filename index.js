@@ -14,6 +14,7 @@ var twilio = require('twilio');
 var client = require('twilio')(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN)
 var client = new twilio.RestClient(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
 // var client = new twilio.RestClient('ACCOUNT_SID', 'AUTH_TOKEN');
+var bodyParser = require('body-parser')
 
 
 
@@ -26,6 +27,14 @@ app.set('view engine', 'html'); // The default engine extension to use
 // var vcapServices = require('vcap_services');
 // var extend = require('util')._extend;
 var watson = require('watson-developer-cloud');
+
+app.use(bodyParser.urlencoded({ // Parse application/x-www-form-urlencoded.
+ limit: '50mb',
+ extended: true, // It will use the qs library for parsing query strings.
+}));
+app.use(bodyParser.json({
+ limit: '50mb',
+})); // Parse application/vnd.api+json as json.
 
 app.get('/', function (req, res) {
   res.render('index.html');
