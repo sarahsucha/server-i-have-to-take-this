@@ -19,9 +19,17 @@
         <form>
           <div class="form-group">
             <label for="phone_input" class="sr-only">Your phone number</label>
-            <input type="text" id="phone_input" class="form-control" name="phone_number" placeholder="Enter your phone number" />
+            <input
+            type='tel' pattern='\d{10}' title='Phone Number (Format: 4151112222)'
+              type="tel"
+              id="phone_input"
+              class="form-control"
+              name="phone_number"
+              placeholder="Enter your phone number"
+              required
+            />
           </div>
-          <button type="submit" onclick="setNumber()" class="btn btn-default">Save</button>
+          <button type="submit" id="submitPhoneNumber" class="btn btn-default">Save</button>
         </form>
       </div>
       <div class="fake-call-page hidden">
@@ -98,6 +106,11 @@
       }
 
       const app = new App();
+      $('#submitPhoneNumber').click((event) => {
+        // event.preventDefault();
+        setNumber();
+        // return false;
+      });
       $('#listen').click(() => {
         app.startListening();
       });
@@ -106,9 +119,9 @@
       });
     });
 
-    var phoneNumber = ""
+    var phoneNumber = "";
 
-    var setNumber = function(){
+    var setNumber = function(event) {
       phoneNumber = document.getElementById('phone_input').value
       localStorage.setItem("phoneNumber", phoneNumber);
       // $('.phoneNumberSection').hide();
