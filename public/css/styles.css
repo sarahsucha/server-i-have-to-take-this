@@ -1,3 +1,11 @@
+* {
+  font-family: 'Roboto Slab', serif;
+}
+
+.homepage ol li {
+    font-size: 1.2em;
+}
+
 .phoney-logo {
   margin: 20px auto 0 auto;
   overflow: hidden;
@@ -16,7 +24,7 @@
 }
 
 .bad-conversation {
-  width: 250px;
+  width: 100%;
 }
 
 @media (max-width: 767px) {
@@ -26,16 +34,13 @@
       width: 100%;
       background-color: #fff;
   }
-  .bad-conversation {
-    width: 70%;
-  }
-
 }
 
 
 
 .main h1 {
   text-align: center;
+  font-size: 2em;
 }
 
 footer {

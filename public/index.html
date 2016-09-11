@@ -17,17 +17,21 @@
           <li>Saved by the call</li>
           <li>La Liberación</li>
         </ol>
-        <img src="bad-conversation-help.png" alt="Bad Conversation" class="bad-conversation" />
+        <div class="row">
+          <div class="col-xs-8 col-xs-offset-2">
+            <img src="bad-conversation-help.png" alt="Bad Conversation" class="bad-conversation" />
+          </div>
+        </div>
         <form class="phone-number-form">
           <div class="form-group">
-            <label for="phone_input" class="sr-only">Your phone number</label>
+            <label for="phone_input">Your phone number</label>
             <input
-            type='tel' pattern='\d{10}' title='Phone Number (Format: 4151112222)'
+            type='tel' pattern='\d{10}' title='Your Phone Number (Format: 4151112222)'
               type="tel"
               id="phone_input"
               class="form-control"
               name="phone_number"
-              placeholder="Enter your phone number"
+              placeholder="Enter your phone number (Format: 4151112222)"
               required
             />
           </div>
