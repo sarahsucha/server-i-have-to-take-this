@@ -9,13 +9,12 @@
     <script>
     class App {
       isTriggerKeyword(data) {
-        const parsedData = data.split(" ");
-        return parsedData.indexOf('interesting') !== -1;
+        return data.includes('interesting') || data.includes('Interesting');
       }
 
       startListening() {
         var that = this;
-        fetch('http://localhost:3000/watson-token').then(function(response) {
+        fetch('/watson-token').then(function(response) {
           return response.text();
         }).then((token) => {
           var stream = WatsonSpeech.SpeechToText.recognizeMicrophone({
@@ -27,6 +26,7 @@
 
           stream.on('data', function(data) {
             if (that.isTriggerKeyword(data)) {
+              console.log('Making a call..');
               stream.stop();
               that.makeCall();
             }
@@ -39,7 +39,7 @@
       }
 
       makeCall() {
-        fetch('http://localhost:3000/call', {
+        fetch('/call', {
           method: 'POST',
           headers: {
             Accept: 'application/json',

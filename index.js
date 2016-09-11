@@ -71,6 +71,7 @@ app.post('/call', function (req, res) {
   }, function(err, responseData) {
     console.log(err);
     console.log(responseData);
+    res.json()
   })
   // // res.json({ 'hey': 'what up' });
 });
