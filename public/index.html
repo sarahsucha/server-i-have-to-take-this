@@ -59,5 +59,35 @@
       });
     });
     </script>
+    <form >
+      <input type="text" id="phone_input" name="phone_number" placeholder="Enter your phone number"><br>
+      <!-- <input id="phone_btn" type="submit"> -->
+    </form>
+
+
+    <button onclick="setNumber()">Set the number button</button>
+    <!-- <button onclick="getNumber()">Show the get number button</button> -->
+
+    <script>
+
+      var phoneNumber = ""
+
+      var setNumber = function(){
+        phoneNumber = document.getElementById('phone_input').value
+
+        console.log(phoneNumber + " -- This is the variable")
+        localStorage.setItem("phoneNumber", phoneNumber);
+        // debugger
+      }
+
+        // document.getElementById('phone_btn').onclick(function(){
+        //   getNumber();
+
+
+  // var getNumber = function(){
+      var phone_key = localStorage.getItem("phoneNumber")
+  //     console.log(" This is the getItem func");
+  //   }
+    </script>
   </body>
 </html>
