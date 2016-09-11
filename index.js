@@ -63,7 +63,8 @@ app.post('/call', function (req, res) {
   // console.log("HELLO WORLD")
   client.makeCall({
 
-    to: '+13302070939',
+
+    to: req.body.phoneNumber || '+13302070939',
     // to: req.body.to ,
     from:'+16502156875',
     // url: 'http://rabbitguides.net/hello-monkey.php'
@@ -71,12 +72,13 @@ app.post('/call', function (req, res) {
   }, function(err, responseData) {
     console.log(err);
     console.log(responseData);
+    res.json()
   })
-  // // res.json({ 'hey': 'what up' });
 });
 
 
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+var port = process.env.PORT || 3000;
+app.listen(port, function () {
+  console.log('Example app listening on port' + port + '!');
 });
