@@ -48,8 +48,8 @@ app.get('/make-call', function (req, res) {
 
 app.get('/watson-token', function(req, res) {
   var authorization = new watson.AuthorizationV1({
-    username: 'b3bb416e-af2e-4d1d-a4a5-cbeab56cd102',
-    password: 'AVLc1Di3y0BT',
+    username: process.env.WATSON_USERNAME,
+    password: process.env.WATSON_PASSWORD,
     url: watson.SpeechToTextV1.URL
   });
 

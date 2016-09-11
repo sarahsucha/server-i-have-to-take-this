@@ -1,6 +1,6 @@
 <html>
   <head>
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
@@ -71,6 +71,7 @@
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.13.0/polyfill.min.js"></script>
     <script src="watson-speech.js"></script>
     <script>
     class App {
@@ -97,7 +98,7 @@
         var that = this;
         fetch('/watson-token').then(function(response) {
           return response.text();
-        }).then((token) => {
+        }).then(function(token) {
           var stream = WatsonSpeech.SpeechToText.recognizeMicrophone({
               token: token,
               keepMic: true
@@ -138,13 +139,14 @@
         $('.homepage').addClass('hidden');
       }
 
-      $('.phone-number-form').on('submit', (event) => {
+      $('.phone-number-form').on('submit', function(event) {
         event.preventDefault();
         app.setNumber($('#phone_input').val());
         $('.homepage').addClass('hidden');
         $('.instruction-page').removeClass('hidden');
+        return false;
       });
-      $('#understand-instructions').click(() => {
+      $('#understand-instructions').click(function() {
         $('.instruction-page').addClass('hidden');
         $('header').addClass('hidden');
         $('footer').addClass('hidden');
@@ -152,19 +154,19 @@
       });
       function showSpinner() {
         $('.spinner-content').removeClass('hidden');
-        setTimeout(() => {
+        setTimeout(function() {
           $('.spinner-content').addClass('hidden');
         }, 1000);
       }
-      $('#listen').click(() => {
+      $('#listen').click(function() {
         showSpinner();
         app.startListening();
       });
-      $('#callMe').click(() => {
+      $('#callMe').click(function() {
         showSpinner();
         app.makeCall(localStorage.getItem("phoneNumber"));
       });
-      $('#edit-number').click(() => {
+      $('#edit-number').click(function() {
         $('.chat-page').addClass('hidden');
         $('header').removeClass('hidden');
         $('footer').removeClass('hidden');
