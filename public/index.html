@@ -1,0 +1,180 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <header>
+      <p class="phoney-logo"></p>
+    </header>
+    <div id="main" class="main">
+      <div class="homepage">
+        <ol>
+          <li>Trapped in a bad conversation!</li>
+          <li>Saved by the call</li>
+          <li>La Liberación</li>
+        </ol>
+        <div class="row">
+          <div class="col-xs-8 col-xs-offset-2">
+            <img src="bad-conversation-help.png" alt="Bad Conversation" class="full-width-image" />
+          </div>
+        </div>
+        <form class="phone-number-form">
+          <div class="form-group">
+            <label for="phone_input">Your phone number</label>
+            <input
+            type='tel' pattern='\d{10}' title='Your Phone Number (Format: 4151112222)'
+              type="tel"
+              id="phone_input"
+              class="form-control"
+              name="phone_number"
+              placeholder="Format: 4151112222"
+              required
+            />
+          </div>
+          <button type="submit" id="submitPhoneNumber" class="btn btn-default">Save</button>
+        </form>
+      </div>
+      <div class="instruction-page hidden">
+        <h1>How It Works</h1>
+        <div class="row">
+          <div class="col-xs-12">
+            <img src="instructions.png" alt="Instructions" class="full-width-image" />
+          </div>
+        </div>
+        <button id="understand-instructions" class="btn btn-default top15">Got It</button>
+      </div>
+      <div class="chat-page hidden">
+        <div class="spinner-content row hidden">
+          <div class="col-xs-4 col-xs-offset-4">
+            <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+          </div>
+        </div>
+        <div class="chat top15">
+          <div class="bubble me" id="edit-number">Hey, has your number changed?</div>
+          <div class="bubble you">No, my phone was temporarily possessed by aliens.</div>
+          <div class="bubble me" id="listen">Listen, I don't have time for that kind of nonsense. If you didn't want to talk with me, you only had to say so.</div>
+          <div class="bubble you" id="callMe">Fine, fine. Call me and we'll figure out how to take this deal to the next level. I'm sure it's in everyone's best interest.</div>
+          <div class="bubble me">Only time will tell. Let's see whether the powers that be recognize a good thing when they see it.</div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <ul>
+        <li>
+          <a href="https://github.com/sarahsucha/server-i-have-to-take-this" target="_blank">Hire Us!</a>
+        </li>
+      </ul>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.13.0/polyfill.min.js"></script>
+    <script src="getUserMedia.min.js"></script>
+    <script src="watson-speech.js"></script>
+    <script>
+    class App {
+      isTriggerKeyword(data) {
+        return data.includes('interesting') || data.includes('Interesting');
+      }
+
+      makeCall(phoneNumber) {
+        console.log('makeCall');
+        console.log(phoneNumber)
+        fetch('/call', {
+          method: 'POST',
+          body: JSON.stringify({
+            phoneNumber: "+1" + phoneNumber
+          }),
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          }
+        });
+      }
+
+      startListening() {
+        var that = this;
+        fetch('/watson-token').then(function(response) {
+          return response.text();
+        }).then(function(token) {
+          var stream = WatsonSpeech.SpeechToText.recognizeMicrophone({
+              token: token,
+              keepMic: true
+          });
+
+          stream.setEncoding('utf8'); // get text instead of Buffers for on data events
+
+          stream.on('data', function(data) {
+            console.log(data);
+            if (that.isTriggerKeyword(data)) {
+              console.log('Making a call..');
+              stream.stop();
+              that.makeCall(localStorage.getItem("phoneNumber"));
+            }
+          });
+
+          stream.on('error', function(err) {
+              console.log(err);
+          });
+        })
+      }
+
+      setNumber(phoneNumber) {
+        localStorage.setItem("phoneNumber", phoneNumber);
+      }
+    }
+
+    $(document).ready(function() {
+      const app = new App();
+
+
+      var phoneNumber = localStorage.getItem("phoneNumber")
+      if (phoneNumber) {
+        $('#phone_input').val(phoneNumber);
+        $('.chat-page').removeClass('hidden');
+        $('header').addClass('hidden');
+        $('footer').addClass('hidden');
+        $('.homepage').addClass('hidden');
+      }
+
+      $('.phone-number-form').on('submit', function(event) {
+        event.preventDefault();
+        app.setNumber($('#phone_input').val());
+        $('.homepage').addClass('hidden');
+        $('.instruction-page').removeClass('hidden');
+        return false;
+      });
+      $('#understand-instructions').click(function() {
+        $('.instruction-page').addClass('hidden');
+        $('header').addClass('hidden');
+        $('footer').addClass('hidden');
+        $('.chat-page').removeClass('hidden');
+      });
+      function showSpinner() {
+        $('.spinner-content').removeClass('hidden');
+        setTimeout(function() {
+          $('.spinner-content').addClass('hidden');
+        }, 1000);
+      }
+      $('#listen').click(function() {
+        showSpinner();
+        app.startListening();
+      });
+      $('#callMe').click(function() {
+        showSpinner();
+        app.makeCall(localStorage.getItem("phoneNumber"));
+      });
+      $('#edit-number').click(function() {
+        $('.chat-page').addClass('hidden');
+        $('header').removeClass('hidden');
+        $('footer').removeClass('hidden');
+        $('.homepage').removeClass('hidden');
+      });
+    });
+    </script>
+  </body>
+</html>
