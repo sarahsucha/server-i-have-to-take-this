@@ -97,7 +97,7 @@
         var that = this;
         fetch('/watson-token').then(function(response) {
           return response.text();
-        }).then((token) => {
+        }).then(function(token) {
           var stream = WatsonSpeech.SpeechToText.recognizeMicrophone({
               token: token,
               keepMic: true
@@ -138,14 +138,14 @@
         $('.homepage').addClass('hidden');
       }
 
-      $('.phone-number-form').on('submit', (event) => {
+      $('.phone-number-form').on('submit', function(event) {
         event.preventDefault();
         app.setNumber($('#phone_input').val());
         $('.homepage').addClass('hidden');
         $('.instruction-page').removeClass('hidden');
         return false;
       });
-      $('#understand-instructions').click(() => {
+      $('#understand-instructions').click(function() {
         $('.instruction-page').addClass('hidden');
         $('header').addClass('hidden');
         $('footer').addClass('hidden');
@@ -153,19 +153,19 @@
       });
       function showSpinner() {
         $('.spinner-content').removeClass('hidden');
-        setTimeout(() => {
+        setTimeout(function() {
           $('.spinner-content').addClass('hidden');
         }, 1000);
       }
-      $('#listen').click(() => {
+      $('#listen').click(function() {
         showSpinner();
         app.startListening();
       });
-      $('#callMe').click(() => {
+      $('#callMe').click(function() {
         showSpinner();
         app.makeCall(localStorage.getItem("phoneNumber"));
       });
-      $('#edit-number').click(() => {
+      $('#edit-number').click(function() {
         $('.chat-page').addClass('hidden');
         $('header').removeClass('hidden');
         $('footer').removeClass('hidden');
