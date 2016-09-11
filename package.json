@@ -54,6 +54,7 @@
     "api"
   ],
   "dependencies": {
+    "watson-developer-cloud": "^2.2.0",
     "accepts": "~1.3.3",
     "array-flatten": "1.1.1",
     "content-disposition": "0.5.1",
