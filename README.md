@@ -4,7 +4,7 @@
 Design a mobile-first app for those times when you're trapped in a bad conversation and need a smooth excuse to escape.
 
 ## Screenshots
-![screenshots](server-i-have-to-take-this/public/screenshots.png "screenshots")
+![screenshots](server-i-have-to-take-this/public/screenshots.jpg "screenshots")
 
 ## Team
 * [Armon Arcuri](https://github.com/armoney)
